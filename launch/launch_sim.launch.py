@@ -14,10 +14,8 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
 
-    # Include the robot_state_publisher launch file, provided by our own package. Force sim time to be enabled
-    # !!! MAKE SURE YOU SET THE PACKAGE NAME CORRECTLY !!!
 
-    package_name='holonomic' #<--- CHANGE ME
+    package_name='holonomic' 
 
     # Get the package directory
     pkg_path = get_package_share_directory(package_name)
@@ -40,6 +38,18 @@ def generate_launch_description():
                                    '-entity', 'my_bot'],
                         output='screen')
 
+    # Add static transform publisher for odom to world
+    static_tf = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_transform_publisher',
+        output='screen',
+        arguments=['0', '0', '0',  # translation: x, y, z
+                  '0', '0', '0',   # rotation: roll, pitch, yaw
+                  'world',         # parent frame
+                  'odom']          # child frame
+    )
+
     # Include RViz
     rviz = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
@@ -51,5 +61,6 @@ def generate_launch_description():
         rsp,
         gazebo,
         spawn_entity,
+        static_tf,
         rviz
     ])
