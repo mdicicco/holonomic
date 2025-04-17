@@ -31,14 +31,7 @@ def generate_launch_description():
         arguments=['-d', rviz_config_path]
     )
 	
-    start_joint_state_publisher_gui = Node(package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        name='joint_state_publisher_gui',
-        output='screen'
-    )
-	
     return LaunchDescription([
         rsp,
-        start_rviz2,
-        start_joint_state_publisher_gui
+        start_rviz2
     ])

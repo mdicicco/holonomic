@@ -19,6 +19,15 @@
 		<color rgba="0 0 0 1"/>
     </material>
 
+    <!-- BASE FOOTPRINT -->
+    <link name="base_footprint"/>
+
+    <joint name="base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0.08" rpy="0 0 0"/>  <!-- Height of wheel radius -->
+    </joint>
+
     <!-- BASE LINK -->
 
     <link name="base_link">
