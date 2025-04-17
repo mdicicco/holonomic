@@ -19,9 +19,12 @@ def generate_launch_description():
 
     package_name='holonomic' #<--- CHANGE ME
 
+    # Get the package directory
+    pkg_path = get_package_share_directory(package_name)
+
     rsp = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory(package_name),'launch','rsp.launch.py'
+                    pkg_path,'launch','rsp.launch.py'
                 )]), launch_arguments={'use_sim_time': 'true'}.items()
     )
 
@@ -37,11 +40,16 @@ def generate_launch_description():
                                    '-entity', 'my_bot'],
                         output='screen')
 
+    # Include RViz
+    rviz = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource([os.path.join(
+                    pkg_path, 'launch', 'rviz.launch.py'
+                )])
+    )
 
-
-    # Launch them all!
     return LaunchDescription([
         rsp,
         gazebo,
         spawn_entity,
+        rviz
     ])
