@@ -31,6 +31,15 @@ def generate_launch_description():
         parameters=[robot_description]
     )
 
+    # Create a joint state publisher node
+    node_joint_state_publisher = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        name='joint_state_publisher',
+        output='screen'
+    )
+
     return LaunchDescription([
-        node_robot_state_publisher
+        node_robot_state_publisher,
+        node_joint_state_publisher
     ])
